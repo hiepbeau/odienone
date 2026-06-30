@@ -1,0 +1,79 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Citizen cards — public read, server-only write (Admin SDK)
+    match /citizen_cards/{cardId} {
+      allow read: if true;
+      allow create, update, delete: if false;
+    }
+
+    // Analytics counters — server-only
+    match /analytics/{docId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Passport (Phase 5)
+    match /passport_locations/{locationId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /passport_scans/{scanId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if false;
+      allow update, delete: if false;
+    }
+
+    match /passport_leaderboard/{userId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /passport_holders/{userId} {
+      allow read, write: if false;
+    }
+
+    // Quiz (Phase 6)
+    match /quiz_questions/{questionId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /quiz_answers/{answerId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /quiz_results/{resultId} {
+      allow read: if true;
+      allow create, update, delete: if false;
+    }
+
+    // Time capsule (Phase 7)
+    match /capsules/{capsuleId} {
+      allow read: if resource.data.visibility == 'public'
+        && resource.data.status == 'approved';
+      allow create, update, delete: if false;
+    }
+
+    // Badges
+    match /badges/{badgeId} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    match /user_badges/{userBadgeId} {
+      allow read: if request.auth != null && resource.data.userId == request.auth.uid;
+      allow create: if false;
+      allow update, delete: if false;
+    }
+
+    // User profiles
+    match /profiles/{userId} {
+      allow read: if true;
+      allow write: if request.auth != null && request.auth.uid == userId;
+    }
+  }
+}

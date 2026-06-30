@@ -1,0 +1,23 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Avatar images — public read, server-only write (Admin SDK)
+    match /avatars/{fileName} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Time capsule photos (Phase 7)
+    match /capsules/{fileName} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Quiz posters (Phase 6)
+    match /quiz-posters/{fileName} {
+      allow read: if true;
+      allow write: if false;
+    }
+  }
+}
