@@ -15,8 +15,6 @@ interface PublicProfileClientProps {
 export function PublicProfileClient({ slug }: PublicProfileClientProps) {
   const { data: card, isLoading, error } = useCitizenCardBySlug(slug);
 
-  const profileUrl = `${process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"}/citizen-card/${slug}`;
-
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[50vh]">
@@ -67,7 +65,7 @@ export function PublicProfileClient({ slug }: PublicProfileClientProps) {
           issueDate: card.issueDate,
           qrCodeUrl: card.qrCodeUrl,
         }}
-        profileUrl={profileUrl}
+        profileSlug={slug}
       />
     </div>
   );

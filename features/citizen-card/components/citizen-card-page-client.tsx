@@ -28,6 +28,7 @@ export function CitizenCardPageClient() {
         avatarUrl: res.card.avatarUrl,
         citizenId: res.card.citizenId,
         issueDate: res.card.issueDate,
+        profileSlug: res.card.profileSlug,
         profileUrl: res.profileUrl,
       });
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -81,6 +82,7 @@ export function CitizenCardPageClient() {
                 issueDate: result.card.issueDate,
                 qrCodeUrl: result.card.qrCodeUrl,
               }}
+              profileSlug={result.card.profileSlug}
               profileUrl={result.profileUrl}
             />
 

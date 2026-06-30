@@ -1,21 +1,32 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import { Download, Share2, Printer, Link2, Check, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { buildCitizenProfileUrl } from "@/lib/app-url";
 import { CitizenCardDisplay } from "./citizen-card-display";
 import type { CitizenCardDisplayData } from "./citizen-card-display";
 
 interface CardShareActionsProps {
   data: CitizenCardDisplayData;
-  profileUrl: string;
+  profileSlug: string;
+  profileUrl?: string;
 }
 
-export function CardShareActions({ data, profileUrl }: CardShareActionsProps) {
+export function CardShareActions({
+  data,
+  profileSlug,
+  profileUrl,
+}: CardShareActionsProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const [downloading, setDownloading] = useState(false);
   const [copied, setCopied] = useState(false);
+
+  const shareUrl = useMemo(
+    () => buildCitizenProfileUrl(profileSlug, profileUrl),
+    [profileSlug, profileUrl]
+  );
 
   async function handleDownload() {
     if (!cardRef.current) return;
@@ -43,7 +54,7 @@ export function CardShareActions({ data, profileUrl }: CardShareActionsProps) {
         await navigator.share({
           title: `Thẻ Công Dân — ${data.fullName}`,
           text: `Tôi là công dân Ô Diên! Xem thẻ của tôi tại:`,
-          url: profileUrl,
+          url: shareUrl,
         });
         return;
       } catch {
@@ -54,7 +65,7 @@ export function CardShareActions({ data, profileUrl }: CardShareActionsProps) {
   }
 
   async function handleCopyLink() {
-    await navigator.clipboard.writeText(profileUrl);
+    await navigator.clipboard.writeText(shareUrl);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   }

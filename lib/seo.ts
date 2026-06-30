@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { APP_NAME, APP_TAGLINE } from "@/lib/constants";
+import { getAppBaseUrl } from "@/lib/app-url";
 
-const APP_URL = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+const APP_URL = getAppBaseUrl();
 
 export const defaultMetadata: Metadata = {
   title: {

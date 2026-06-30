@@ -1,4 +1,5 @@
 import type { LocationCategory } from "@/types";
+import { buildAppUrl } from "@/lib/app-url";
 
 export interface PassportLocationSeed {
   id: string;
@@ -225,6 +226,5 @@ export function getLocationById(id: string): PassportLocationSeed | undefined {
 export function getScanUrl(locationId: string): string {
   const loc = getLocationById(locationId);
   if (!loc) return "";
-  const base = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-  return `${base}/passport/scan/${locationId}?t=${loc.qrSecret}`;
+  return buildAppUrl(`/passport/scan/${locationId}?t=${loc.qrSecret}`);
 }

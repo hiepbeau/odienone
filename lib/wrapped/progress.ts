@@ -5,6 +5,7 @@ export interface WrappedCitizenCardProgress {
   avatarUrl: string;
   citizenId: string;
   issueDate: string;
+  profileSlug?: string;
   profileUrl: string;
 }
 

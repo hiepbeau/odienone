@@ -3,6 +3,7 @@
 import { FieldValue, type Firestore } from "firebase-admin/firestore";
 import QRCode from "qrcode";
 import { getAdminDb } from "@/lib/firebase/admin";
+import { buildCitizenProfileUrl } from "@/lib/app-url";
 import { resolveAvatarUrl } from "@/lib/image/avatar-storage";
 import { generateCitizenId, generateSlug } from "@/lib/utils";
 import { ISSUE_DATE } from "@/lib/constants";
@@ -11,10 +12,6 @@ import type { CreateCitizenCardResult } from "@/features/citizen-card/services/c
 
 const COLLECTION = "citizen_cards";
 const COUNTERS_DOC = "analytics/counters";
-
-function getAppUrl(): string {
-  return process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
-}
 
 async function getNextCitizenSequence(db: Firestore): Promise<number> {
   const counterRef = db.doc(COUNTERS_DOC);
@@ -74,7 +71,7 @@ export async function createCitizenCardAction(
   const cardRef = db.collection(COLLECTION).doc();
 
   const avatarUrl = await resolveAvatarUrl(avatarFile, cardRef.id);
-  const profileUrl = `${getAppUrl()}/citizen-card/${profileSlug}`;
+  const profileUrl = buildCitizenProfileUrl(profileSlug);
   const qrCodeUrl = await generateQrDataUrl(profileUrl);
 
   const cardResponse: CreateCitizenCardResult["card"] = {

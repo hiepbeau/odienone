@@ -4,6 +4,7 @@ import { FieldValue, type QueryDocumentSnapshot } from "firebase-admin/firestore
 import { getAdminDb } from "@/lib/firebase/admin";
 import { verifyAdmin, AdminAuthError } from "@/lib/auth/verify-admin";
 import { toCsv } from "@/lib/csv";
+import { buildAppUrl } from "@/lib/app-url";
 import { PASSPORT_LOCATIONS } from "@/features/passport/data/locations";
 import type { CapsuleStatus } from "@/types";
 
@@ -255,7 +256,6 @@ export async function exportCitizenCardsCsvAction(
   idToken: string
 ): Promise<string> {
   const cards = await getAdminCitizenCardsAction(idToken);
-  const appUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
 
   return toCsv(
     [
@@ -275,7 +275,7 @@ export async function exportCitizenCardsCsvAction(
       card.village,
       card.birthday,
       card.issueDate,
-      `${appUrl}/citizen-card/${card.profileSlug}`,
+      buildAppUrl(`/citizen-card/${card.profileSlug}`),
       card.createdAt,
     ])
   );

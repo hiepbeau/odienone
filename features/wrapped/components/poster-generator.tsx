@@ -5,6 +5,7 @@ import { toJpeg, toPng } from "html-to-image";
 import QRCode from "qrcode";
 import { Check, Copy, Download, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { buildCitizenProfileUrl } from "@/lib/app-url";
 import type { WrappedPayload } from "../types";
 
 interface PosterGeneratorProps {
@@ -19,7 +20,11 @@ export function PosterGenerator({ payload }: PosterGeneratorProps) {
   const [copied, setCopied] = useState(false);
   const [qrDataUrl, setQrDataUrl] = useState<string>("");
 
-  const profileUrl = payload.progress.citizenCard?.profileUrl ?? "";
+  const profileSlug = payload.progress.citizenCard?.profileSlug ?? "";
+  const profileUrl = buildCitizenProfileUrl(
+    profileSlug,
+    payload.progress.citizenCard?.profileUrl
+  );
 
   useEffect(() => {
     if (!profileUrl) return;

@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import { Download, Share2, Link2, Check, Loader2, RotateCcw, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { buildAppUrl } from "@/lib/app-url";
 import { QuizResultPoster, type QuizPosterData } from "./quiz-result-poster";
 
 interface QuizResultActionsProps {
@@ -24,7 +25,7 @@ export function QuizResultActions({
   const shareUrl =
     typeof window !== "undefined"
       ? `${window.location.origin}/quiz/result/${resultId}`
-      : `${process.env.NEXT_PUBLIC_APP_URL ?? ""}/quiz/result/${resultId}`;
+      : buildAppUrl(`/quiz/result/${resultId}`);
 
   const shareText = `Tôi là người Ô Diên ${data.score}% — "${data.title}"! Làm quiz tại Ô Diên One:`;
 
