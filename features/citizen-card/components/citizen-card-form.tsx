@@ -188,7 +188,8 @@ export function CitizenCardForm({ onSubmit, isLoading }: CitizenCardFormProps) {
         <p className="text-sm text-muted-foreground mb-4">Xem trước thẻ</p>
         <CitizenCardDisplay data={previewData} />
         <p className="text-xs text-muted-foreground mt-4 text-center max-w-sm">
-          Thẻ sẽ được cấp số định danh và mã QR sau khi bạn nhấn tạo thẻ.
+          Đây là thẻ kỷ niệm số được tạo để hưởng ứng Ô Diên One. 
+          Thẻ chỉ mang ý nghĩa lưu niệm và trải nghiệm, không có giá trị pháp lý.
         </p>
       </motion.div>
     </div>
