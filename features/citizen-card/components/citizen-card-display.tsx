@@ -101,7 +101,7 @@ export const CitizenCardDisplay = forwardRef<
             <div className="space-y-2 sm:space-y-2.5">
               <CardField label="Họ và tên" value={data.fullName || "—"} large />
               <CardField
-                label="Ngày sinh"
+                label="Năm sinh"
                 value={formatBirthday(data.birthday) || "—"}
               />
               <CardField label="Thôn/Xóm" value={data.village || "—"} />

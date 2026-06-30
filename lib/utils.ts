@@ -26,6 +26,7 @@ export function generateCitizenId(sequence: number): string {
 
 export function formatBirthday(dateStr: string): string {
   if (!dateStr) return "";
+  if (/^\d{4}$/.test(dateStr)) return dateStr;
   const date = new Date(dateStr);
   if (isNaN(date.getTime())) return dateStr;
   return new Intl.DateTimeFormat("vi-VN", {

@@ -147,8 +147,15 @@ export function CitizenCardForm({ onSubmit, isLoading }: CitizenCardFormProps) {
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="birthday">Ngày sinh</Label>
-          <Input id="birthday" type="date" {...register("birthday")} />
+          <Label htmlFor="birthday">Năm sinh</Label>
+          <Input
+            id="birthday"
+            type="text"
+            inputMode="numeric"
+            placeholder="VD: 1990"
+            maxLength={4}
+            {...register("birthday")}
+          />
           {errors.birthday && (
             <p className="text-sm text-destructive">{errors.birthday.message}</p>
           )}
